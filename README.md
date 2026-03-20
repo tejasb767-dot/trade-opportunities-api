@@ -2,127 +2,137 @@
 
 ## Project Overview
 
-Trade Opportunities API is a FastAPI-based backend application that analyzes stock market sectors using real-time financial news data and AI.
+Trade Opportunities API is a FastAPI backend that analyzes stock market sectors using real-time news data and AI.
 
-The API searches for market news related to a given sector, sends the collected data to an AI model (Groq), and returns a structured market analysis report.
+The API fetches financial news, sends it to Groq AI for analysis, and returns a structured market report.
+Reports can also be downloaded as Markdown files.
 
-The report can also be saved as a Markdown (.md) file and downloaded by the user.
+This project demonstrates:
 
-This project demonstrates backend API development, external API integration, AI-based analysis, authentication, rate limiting, and secure environment handling.
+* FastAPI backend development
+* External API integration
+* AI-based analysis using Groq
+* Authentication using API key
+* Rate limiting
+* Environment variable handling using .env
 
+---
 
-## Features
+## Project Setup
 
-- FastAPI backend
-- Sector-based market analysis
-- External News API integration
-- AI analysis using Groq API
-- Structured JSON response
-- Markdown report generation
-- Downloadable report file
-- API key authentication
-- Rate limiting (SlowAPI)
-- Input validation
-- Logging enabled
-- Secure environment variables (.env)
+### 1. Clone repository
 
+git clone <repo-url>
 
-## API Endpoints
+cd trade-opportunities-api-main
 
+---
 
-### Analyze Sector
+### 2. Create virtual environment (recommended)
 
-GET /analyze/{sector}
+python -m venv venv
 
-Returns structured market analysis for a sector.
+venv\Scripts\activate
 
-Example:
+---
 
-/analyze/technology
+### 3. Install dependencies (IMPORTANT ORDER)
 
+Due to Groq + httpx version conflict, install dependencies in this order.
 
-### Download Report
+pip install httpx==0.27.0
 
-GET /download/{sector}
+pip install groq==0.9.0
 
-Downloads the report as a Markdown file.
+pip install -r requirements.txt
 
-Example:
+---
 
-/download/technology
+## Environment Setup (.env file)
 
+Create a file named `.env` in the project root folder.
+
+Location:
+
+trade-opportunities-api-main/.env
+
+Add the following values:
+
+API_KEY=tejas123
+GROQ_API_KEY=GIVEN_IN_PDF_SENT TO YOU
+NEWS_API_KEY=GIVEN_IN_PDF SENT TO YOU
+RATE_LIMIT=3
+
+Note:
+
+The `.env` file is not included in GitHub for security reasons.
+Please create it manually before running the server.
+
+---
+
+## Run Server
+
+python -m uvicorn main:app --reload
+
+Server will start at:
+
+http://127.0.0.1:8000
+
+---
+
+## Open Swagger UI
+
+http://127.0.0.1:8000/docs
+
+---
 
 ## Authentication
-
-This API requires an API key.
 
 All requests must include header:
 
 x-api-key: tejas123
 
-
 Example:
 
-curl -X GET "http://127.0.0.1:8000/analyze/technology" \
+curl -X GET "http://127.0.0.1:8000/analyze/technology" ^
 -H "x-api-key: tejas123"
 
+---
 
+## API Endpoints
 
-## Security Measures
+GET /analyze/{sector}
 
-- API key authentication
-- Rate limiting (5 requests per minute)
-- Input validation
-- Error handling
-- Logging enabled
-- Secrets stored in .env
-- .env ignored using .gitignore
+Example sectors:
 
+technology
+pharmaceuticals
+agriculture
+banking
+energy
 
+GET /download/{sector}
+
+Downloads report as Markdown file.
+
+---
 
 ## Technologies Used
 
-- Python
-- FastAPI
-- Uvicorn
-- Requests
-- Groq API (AI)
-- News API
-- SlowAPI (rate limiting)
-- Pydantic
-- Dotenv
+Python
+FastAPI
+Uvicorn
+Groq API
+News API
+SlowAPI
+Pydantic
+Dotenv
+httpx
 
-
-
-## How to Run
-
-Install dependencies
-
-pip install -r requirements.txt
-
-
-Run server
-
-uvicorn main:app --reload
-
-
-Open Swagger UI
-
-http://127.0.0.1:8000/docs
-
-
-
-## Example Workflow
-
-1. User enters sector name
-2. API fetches latest news using News API
-3. Data sent to Groq AI for analysis
-4. Structured report returned in JSON
-5. Report saved as Markdown (.md)
-6. User downloads report file
-
-
+---
 
 ## Author
 
 Tejas B
+
+---
