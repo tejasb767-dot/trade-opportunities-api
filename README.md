@@ -2,37 +2,39 @@
 
 ## Project Overview
 
-Trade Opportunities API is a FastAPI-based backend application that analyzes stock market sectors using real-time news data and AI.
+Trade Opportunities API is a FastAPI-based backend application that analyzes stock market sectors using real-time financial news data and AI.
 
-The API fetches financial news related to a given sector, processes the data using an AI model, and returns a structured market analysis report.
+The API searches for market news related to a given sector, sends the collected data to an AI model (Groq), and returns a structured market analysis report.
 
-The generated report can also be saved as a Markdown (.md) file and downloaded by the user.
+The report can also be saved as a Markdown (.md) file and downloaded by the user.
 
-This project demonstrates backend API development, external API integration, AI-based analysis, and security implementation.
+This project demonstrates backend API development, external API integration, AI-based analysis, authentication, rate limiting, and secure environment handling.
 
 
 ## Features
 
 - FastAPI backend
 - Sector-based market analysis
-- External news API integration
-- AI analysis using Groq
+- External News API integration
+- AI analysis using Groq API
 - Structured JSON response
 - Markdown report generation
 - Downloadable report file
 - API key authentication
-- Rate limiting
+- Rate limiting (SlowAPI)
 - Input validation
-- Logging
+- Logging enabled
+- Secure environment variables (.env)
 
 
 ## API Endpoints
+
 
 ### Analyze Sector
 
 GET /analyze/{sector}
 
-Returns structured market analysis.
+Returns structured market analysis for a sector.
 
 Example:
 
@@ -54,14 +56,16 @@ Example:
 
 This API requires an API key.
 
-All requests must include the header:
+All requests must include header:
 
 x-api-key: tejas123
+
 
 Example:
 
 curl -X GET "http://127.0.0.1:8000/analyze/technology" \
 -H "x-api-key: tejas123"
+
 
 
 ## Security Measures
@@ -71,6 +75,9 @@ curl -X GET "http://127.0.0.1:8000/analyze/technology" \
 - Input validation
 - Error handling
 - Logging enabled
+- Secrets stored in .env
+- .env ignored using .gitignore
+
 
 
 ## Technologies Used
@@ -86,31 +93,34 @@ curl -X GET "http://127.0.0.1:8000/analyze/technology" \
 - Dotenv
 
 
+
 ## How to Run
 
-1. Install dependencies
+Install dependencies
 
 pip install -r requirements.txt
 
 
-2. Run the server
+Run server
 
 uvicorn main:app --reload
 
 
-3. Open Swagger UI
+Open Swagger UI
 
 http://127.0.0.1:8000/docs
 
 
+
 ## Example Workflow
 
-1. Enter sector name
-2. API fetches latest news
-3. AI analyzes the data
+1. User enters sector name
+2. API fetches latest news using News API
+3. Data sent to Groq AI for analysis
 4. Structured report returned in JSON
-5. Report saved as .md file
-6. User can download the file
+5. Report saved as Markdown (.md)
+6. User downloads report file
+
 
 
 ## Author
